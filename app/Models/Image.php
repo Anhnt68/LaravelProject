@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class image extends Model
+class Image extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -13,4 +13,9 @@ class image extends Model
         'imagetable_id',
         'imagetable_id',
     ];
+    public function imageable()
+    {
+        return $this->morphTo();
+    }
+
 }

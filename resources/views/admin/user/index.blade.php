@@ -19,7 +19,7 @@
 
                         <table id="basic-datatable" class="table dt-responsive nowrap">
 
-                            <a href="{{ route('roles.create') }}" type="submit" class="btn btn-success waves-effect waves-light">Thêm
+                            <a href="{{ route('users.create') }}" type="submit" class="btn btn-success waves-effect waves-light">Thêm
                                 mới</a>
 
 
@@ -27,10 +27,10 @@
                                 <tr>
                                     <th style="width:5%">STT</th>
                                     <th>Name</th>
-                                    <th>Display Name</th>
-                                    <th>Group</th>
-                                    <th>Created</th>
-                                    <th>Updated</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Giới tính</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
@@ -41,15 +41,16 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $value->name }}</td>
-                                        <td>{{ $value->display_name }}</td>
-                                        <td>{{ $value->group }}</td>
-
+                                        <td>{{ $value->email }}</td>
+                                        <td>{{ $value->phone }}</td>
+                                        <td>{{$value->address}}</td>
+                                        <td>{{$value->gender}}</td>
                                         <td>{{ $value->created_at }}</td>
                                         <td>{{ $value->updated_at }}</td>
                                         <td>
-                                            <a href="{{route('roles.edit', $value->id)}}" class="btn btn-warning">Edit</a>
+                                            <a href="{{route('users.edit', $value->id)}}" class="btn btn-warning">Edit</a>
                                             <div class="">
-                                                <form action="{{ route('roles.destroy', $value->id) }}"
+                                                <form action="{{ route('users.destroy', $value->id) }}"
                                                       id="item-{{ $value->id }}" method="post">
                                                     @csrf
                                                     @method('DELETE')

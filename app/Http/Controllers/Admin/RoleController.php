@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -14,7 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data = Role::paginate(5);
+        $data = Role::latest('id')->paginate(5);
         return view('admin.roles.index', compact('data'));
     }
 
@@ -30,9 +32,13 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        //
+        $dataCreate = $request->all();
+        $dataCreate['guard_name'] = 'web';
+        $role = Role::create($dataCreate);
+        $role->permissions()->attach($dataCreate['permission_ids']);
+        return to_route('roles.index')->with(['message'=>'Create success ']);
     }
 
     /**
@@ -47,15 +53,21 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.roles.edit');
+        $role = Role::with('permissions')->findOrFail($id);
+        $permissions = Permission::all()->groupBy('group');
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRoleRequest $request, string $id)
     {
-        //
+        $role = Role::findById($id);
+        $dataUpdate = $request->all();
+        $role->update($dataUpdate);
+        $role->permissions()->sync($dataUpdate['permission_ids']);
+        return to_route('roles.index')->with(['message'=>'Update success ']);
     }
 
     /**
@@ -63,6 +75,7 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Role::destroy($id);
+        return to_route('roles.index')->with(['message'=>'Delete success ']);
     }
 }
