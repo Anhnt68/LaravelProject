@@ -275,7 +275,7 @@
 
     <!-- App js -->
     <script src="{{ asset('admin/assets/js/theme.js') }}"></script>
-
+    @yield('script')
 </body>
 
 </html>

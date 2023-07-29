@@ -3,11 +3,11 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\Storage;
-use Image;
+use Intervention\Image\Facades\Image;
 
 trait HandleImageTrait
 {
-    protected string $path = 'upload/users';
+    protected string $path = 'uploads/users/';
 
     /**
      * @param $request
@@ -24,9 +24,10 @@ trait HandleImageTrait
      */
     public function saveImage($request)
     {
+        $image = $request->file('image');
         if ($this->verify($request)) {
-            $name = time() .'.'. $image->getClientOriginalExtension();
-            Image::make($image)->resize(300, 300)->save($path. $name);
+            $name = time() . '.' . $image->getClientOriginalExtension();
+            Image::make($image)->resize(300, 300)->save($this->path . $name);
             return $name;
         }
     }
@@ -39,8 +40,7 @@ trait HandleImageTrait
      */
     public function updateImage($request, $currentImage): mixed
     {
-        if($this->verify($request))
-        {
+        if ($this->verify($request)) {
             $this->deleteImage($currentImage);
             return $this->saveImage($request);
         }
@@ -53,11 +53,8 @@ trait HandleImageTrait
      */
     public function deleteImage($imageName): void
     {
-        if($imageName && file_exists($this->path .$imageName))
-        {
-            Storage::delete($this->path .$imageName);
+        if ($imageName && file_exists($this->path . $imageName)) {
+            Storage::delete($this->path . $imageName);
         }
     }
 }
-
-

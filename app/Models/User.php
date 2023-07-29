@@ -12,14 +12,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Image;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HandleImageTrait, HasRoles;
 
-    const IMAGE_SAVE_PATH = 'public/upload/';
-    const IMAGE_SHOW_PATH = 'storage/upload/';
+    const IMAGE_SAVE_PATH = 'public/uploads/';
+    const IMAGE_SHOW_PATH = 'storage/uploads/';
     /**
      * The attributes that are mass assignable.
      *
@@ -61,9 +62,8 @@ class User extends Authenticatable
     {
         return $this->roles()->sync($roles);
     }
-    public function images(){
-        return $this->morphTo(Image::class, 'imageable');
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
-
 }
-

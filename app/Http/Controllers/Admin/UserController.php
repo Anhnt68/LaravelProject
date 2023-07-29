@@ -15,7 +15,7 @@ class UserController extends Controller
     protected $role;
     public function __construct(User $user, Role $role)
     {
-        $this->user = $user ;
+        $this->user = $user;
         $this->role = $role;
     }
 
@@ -24,8 +24,8 @@ class UserController extends Controller
      */
     public function index()
     {
-         $data = $this->user->latest('id')->paginate(5);
-         return view('admin.user.index', compact('data'));
+        $data = $this->user->latest('id')->paginate(5);
+        return view('admin.user.index', compact('data'));
     }
 
     /**
@@ -40,15 +40,20 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
         $dataCreate = $request->all();
         $dataCreate['password'] = Hash::make($request->password);
         $dataCreate['image'] = $this->user->saveImage($request);
+        // dd($request->all());
+
         $user = $this->user->create($dataCreate);
-        dd($dataCreate['image']);
-        $user->image()->create(['url'=>$dataCreate['image']]);
-        return to_route('users.index')->with(['massage'=>'create success']);
+
+        // dd($user->images());
+        /** @var User $user */
+        $user->image()->create(['url' => $dataCreate['image']]);
+
+        return to_route('users.index')->with(['massage' => 'create success']);
     }
 
     /**

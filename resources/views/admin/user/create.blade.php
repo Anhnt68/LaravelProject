@@ -6,7 +6,7 @@
         <div class="card-body">
             <h4 class="card-title">User Add</h4>
 
-            <form method="post" action="{{route('users.store')}}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('users.store') }}" enctype="multipart/form-data">
                 {{-- @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -21,51 +21,51 @@
                         <label>Image</label>
                         <input type="file" accept="image/*" name="image" id="image-input" class="form-control">
                         @error('image')
-                        <span class="text-danger"> {{ $message }}</span>
+                            <span class="text-danger"> {{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="col-5">
-                        <img src="" id="show-image" alt="">
+                    <div class="">
+                        <img src="" id="show-image" alt=""style="width: 50px; height:50px">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="simpleinput">Name</label>
-                    <input type="text" name="name" id="simpleinput" class="form-control" value="{{old('name')}}" placeholder="Enter your text">
+                    <input type="text" name="name" id="simpleinput" class="form-control" value="{{ old('name') }}"
+                        placeholder="Enter your text">
                     @error('name')
-                    <span class="text-danger">{{$message}}</span>
+                        <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="simpleinput">Email</label>
-                    <input type="text" name="email" id="simpleinput" class="form-control" value="{{old('email')}}"
+                    <input type="text" name="email" id="simpleinput" class="form-control" value="{{ old('email') }}"
                         placeholder="Enter your text">
                     @error('email')
-                    <span class="text-danger">{{$message}}</span>
+                        <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="simpleinput">Password</label>
                     <input type="password" name="password" id="simpleinput" class="form-control"
-                           placeholder="Enter your text">
+                        placeholder="Enter your text">
                     @error('password')
-                    <span class="text-danger">{{$message}}</span>
+                        <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="simpleinput">Phone number</label>
-                    <input type="text" name="phone" id="simpleinput" class="form-control" value="{{old('phone')}}"
-                           placeholder="Enter your text">
+                    <input type="text" name="phone" id="simpleinput" class="form-control" value="{{ old('phone') }}"
+                        placeholder="Enter your text">
                     @error('phone')
-                    <span class="text-danger">{{$message}}</span>
+                        <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="simpleinput">Địa chỉ</label>
-                    <textarea name="address" id="simpleinput" class="form-control"
-                              >{{old('address')}}</textarea>
+                    <textarea name="address" id="simpleinput" class="form-control">{{ old('address') }}</textarea>
                     @error('address')
-                    <span class="text-danger">{{$message}}</span>
+                        <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
@@ -75,7 +75,7 @@
                         <option value="Nữ">Nữ</option>
                     </select>
                     @error('gender')
-                    <span class="text-danger">{{$message}}</span>
+                        <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
@@ -86,10 +86,11 @@
                         <h4>{{ $groupName }}</h4>
                         <div class="form-group">
                             @foreach ($role as $item)
-                                   <div class="form-group">
-                                       <input class="form-check-input" type="checkbox" value="{{ $item->id }}" name="role_ids[]">
-                                       <label for="">{{ $item->display_name}}</label>
-                                   </div>
+                                <div class="form-group">
+                                    <input class="form-check-input" type="checkbox" value="{{ $item->id }}"
+                                        name="role_ids[]">
+                                    <label for="">{{ $item->display_name }}</label>
+                                </div>
                             @endforeach
                         </div>
                     @endforeach
@@ -109,7 +110,7 @@
 @section('script')
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-            crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <script>
         $(() => {
             function readURL(input) {
@@ -131,4 +132,3 @@
         });
     </script>
 @endsection
-
